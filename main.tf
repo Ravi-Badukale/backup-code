@@ -1,6 +1,6 @@
 module "vpc" {
   for_each = var.vpcs
-  source   = "/home/badukaleravi123/proj-terraform-handled-proj/modules/vpc"
+  source   = "./modules/vpc"
 
   name                    = each.key
   auto_create_subnetworks = each.value.auto_create_subnetworks
@@ -18,7 +18,7 @@ module "subnet" {
       ]
     ]) : vpc_subnet.key => vpc_subnet
   }
-  source        = "/home/badukaleravi123/proj-terraform-handled-proj/modules/subnet"
+  source        = "./modules/subnet"
   vpc_self_link = module.vpc[each.value.vpc_name].self_link
   name          = each.key
   cidr          = each.value.subnet.cidr
@@ -42,7 +42,7 @@ module "compute" {
     ]) : vm_item.key => vm_item
   }
 
-  source              = "/home/badukaleravi123/proj-terraform-handled-proj/modules/compute"
+  source              = "./modules/compute"
   name                = each.key
   machine_type        = each.value.vm.machine_type
   zone                = each.value.vm.zone
@@ -71,7 +71,7 @@ module "firewall" {
     ]) : fw_item.key => fw_item
   }
 
-  source = "/home/badukaleravi123/proj-terraform-handled-proj/modules/firewall"
+  source = "./modules/firewall"
 
   name              = each.key
   network_self_link = module.vpc[each.value.vpc_name].self_link
@@ -87,7 +87,7 @@ module "firewall" {
 module "nat" {
   for_each = var.nat_vpcs
 
-  source            = "/home/badukaleravi123/proj-terraform-handled-proj/modules/nat"
+  source            = "./modules/nat"
   vpc_name          = each.key
   region            = each.value.region
   network_self_link = module.vpc[each.key].self_link
@@ -117,7 +117,7 @@ module "vpc-peering" {
     ]) : vpc_peering.key => vpc_peering
   }
 
-  source = "/home/badukaleravi123/proj-terraform-handled-proj/modules/vpc-peering"
+  source = "./modules/vpc-peering"
 
   name                   = each.value.name
   network_self_link      = module.vpc[each.value.network].self_link
@@ -130,7 +130,7 @@ module "vpc-peering" {
 
 module "classic_vpns" {
   for_each = var.classic_vpns
-  source   = "/home/badukaleravi123/proj-terraform-handled-proj/modules/classic-vpn"
+  source   = "./modules/classic-vpn"
 
   name                   = each.key
   region                 = each.value.region
@@ -143,7 +143,7 @@ module "classic_vpns" {
 }
 
 module "static_routes" {
-  source = "/home/badukaleravi123/proj-terraform-handled-proj/modules/static_route"
+  source = "./modules/static_route"
 
   routes = {
     for route_name, route in var.static_routes :
@@ -159,7 +159,7 @@ module "static_routes" {
 }
 
 module "uig" {
-  source = "/home/badukaleravi123/proj-terraform-handled-proj/modules/instance-group"
+  source = "./modules/instance-group"
 
   for_each = var.uig
   name     = each.key
@@ -172,7 +172,7 @@ module "uig" {
 }
 
 module "http_lb" {
-  source = "/home/badukaleravi123/proj-terraform-handled-proj/modules/http-lb"
+  source = "./modules/http-lb"
 
   for_each = var.http_lb
   name     = each.key
@@ -182,7 +182,7 @@ module "http_lb" {
 
 module "internal_nlb" {
   for_each = var.internal_nlb
-  source   = "/home/badukaleravi123/proj-terraform-handled-proj/modules/internal_nlb"
+  source   = "./modules/internal_nlb"
 
   name       = each.key
   region     = each.value.region
