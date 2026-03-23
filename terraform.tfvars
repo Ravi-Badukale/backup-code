@@ -15,13 +15,13 @@ vpcs = {
             machine_type        = "e2-medium"
             zone                = "us-central1-a"
             public_ip           = false
-            startup_script_path = "/home/badukaleravi123/proj-terraform-handled-proj/startup.sh"
+            startup_script_path = "./startup.sh"
           }
           app01 = {
             machine_type        = "e2-micro"
             zone                = "us-central1-a"
             public_ip           = false
-            startup_script_path = "/home/badukaleravi123/proj-terraform-handled-proj/startup.sh"
+            startup_script_path = "./startup.sh"
           }
         }
       }
@@ -35,7 +35,7 @@ vpcs = {
             machine_type        = "e2-medium"
             zone                = "us-west1-a"
             public_ip           = false
-            startup_script_path = "/home/badukaleravi123/proj-terraform-handled-proj/startup.sh"
+            startup_script_path = "./startup.sh"
           }
         }
 
